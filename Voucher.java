@@ -1,3 +1,5 @@
+
+// Syafiq: Create a Voucher class
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Scanner;
@@ -7,19 +9,16 @@ public class Voucher {
     private String voucherID;
     private Timestamp issueDate;
     private boolean isRedeemed;
-    private String description;
+    private String discount;
     private static int voucherCount = 0;
     final int MAX_VOUCHER_COUNT = 30;
 
     public Voucher(String voucherID) {
         voucherCount++;
-        if (voucherCount > MAX_VOUCHER_COUNT) {
-            throw new RejectedExecutionException("Maximum voucher count reached!");
-        }
         this.voucherID = voucherID;
-        this.issueDate = new Timestamp(new Date().getTime());
+        this.issueDate = new Timestamp(new Date().getTime()); // get current date and time using Timestamp class
         this.isRedeemed = false;
-        this.description = (Math.random() * 8 + 5) + "%";
+        this.discount = (int) (Math.random() * 8 + 5) + "%"; // generate a random number between 5 and 8 for discount
     }
 
     public String getVoucherID() {
@@ -34,8 +33,8 @@ public class Voucher {
         return this.isRedeemed;
     }
 
-    public String getDescription() {
-        return this.description;
+    public String getDiscount() {
+        return this.discount;
     }
 
     public static int getVoucherCount() {
@@ -50,8 +49,8 @@ public class Voucher {
         this.isRedeemed = true;
     }
 
-    public void setDescription(int description) {
-        this.description = description + "%";
+    public void setDiscount(int description) {
+        this.discount = description + "%";
     }
 
     // Firdaus = generateiD and generateVoucher
