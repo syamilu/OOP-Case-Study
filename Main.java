@@ -5,6 +5,7 @@ public class Main {
     public static void main(String[] args) {
         ArrayList<Voucher> voucherList = new ArrayList<>();
         Scanner input = new Scanner(System.in);
+        Voucher v = new Voucher(null);
 
         System.out.println("Welcome to the BlueShark Voucher Management System!");
         System.out.println("---------------------------------------------------");
@@ -21,7 +22,7 @@ public class Main {
             int choice = input.nextInt();
 
             switch (choice) {
-                case 1:
+                case 1: v.generateVoucher(); //FIrdaus = generateVoucher()
                     break;
                 case 2:
                     break;
