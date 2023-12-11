@@ -6,14 +6,8 @@ public class Main {
         ArrayList<Voucher> voucherList = new ArrayList<>();
         int choice = 0;
         Scanner input = new Scanner(System.in);
-        // test data
-        for (int i = 0; i < 10; i++) {
-            voucherList.add(new Voucher(Integer.toString(i)));
-            if (i == 3 || i == 5) {
-                voucherList.get(i).setIsRedeemed();
-            }
-        }
-        // end of test data
+
+        Voucher v = new Voucher(null);
 
         System.out.println("Welcome to the BlueShark Voucher Management System!");
         System.out.println("---------------------------------------------------");
@@ -35,7 +29,7 @@ public class Main {
             } while (choice < 1 || choice > 6);
 
             switch (choice) {
-                case 1:
+                case 1: v.generateVoucher(); //FIrdaus = generateVoucher()
                     break;
                 case 2:
                     break;
