@@ -14,6 +14,8 @@ public class ViewVoucher {
 
     // this is for user to choose what they want to view
     public static void displayOptions(ArrayList<Voucher> voucherList) {
+
+        // p/s: add exception if no voucher is generated
         int choice = 0;
         ViewVoucher.voucherList = voucherList;
         Scanner input = new Scanner(System.in);
@@ -27,6 +29,7 @@ public class ViewVoucher {
             System.out.println("4. Back to main menu");
             System.out.print("Your choice: ");
             choice = input.nextInt();
+            // check input exception
 
             switch (choice) {
                 case 1:
@@ -36,6 +39,8 @@ public class ViewVoucher {
                     ViewVoucher.viewVouchersByType();
                     break;
                 case 3:
+                    break;
+                case 4:
                     return;
                 default:
                     System.out.println("Invalid choice!");
