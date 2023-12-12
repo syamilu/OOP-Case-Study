@@ -78,6 +78,7 @@ public class Main {
             System.out.print("Enter the voucher ID to modify: ");
             String voucherID = input.nextLine();
             for (Voucher v : voucherList) {
+                // Checking for any match for given voucherID and storing it in a variable
                 if (v.getVoucherID().equals(voucherID)) {
                     v1 = v;
                     found = true;
@@ -88,7 +89,7 @@ public class Main {
             if (!found) {
                 System.out.println("Voucher not found!");
                 return;
-            } else if (!v1.getIsRedeemed())
+            } else if (!v1.getIsRedeemed()) // Display voucher details if voucher is not redeemed
 
             {
                 System.out.println("Voucher Details :-");
@@ -102,7 +103,7 @@ public class Main {
                 return;
             }
 
-            System.out.println("Modify Option:");
+            System.out.println("\nModify Option:");
             System.out.println("1. Modify voucher ID");
             System.out.println("2. Modify discount rates");
             System.out.println("3. Modify another voucher");
@@ -135,15 +136,30 @@ public class Main {
                     return;
                 }
                 case 2: {
-                    System.out.println("Enter the new discount rate: ");
-                    int newDiscount = input.nextInt();
-                    v1.setDiscount(newDiscount);
-                    System.out.println("Discount rate has been modified.");
-                    return;
+                    int newDiscount = 0;
+                    do {
+                        System.out.println("Enter the new discount rate: ");
+                        // input validation and error handling
+                        try {
+                            newDiscount = input.nextInt();
+                            if (newDiscount < 0 || newDiscount > 100) {
+                                System.out.println("Invalid input. Please enter a number between 0 and 100.");
+                            } else {
+                                v1.setDiscount(newDiscount);
+                                System.out.println("Discount rate has been modified.");
+                                return;
+                            }
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid input. Integers only.");
+                            return;
+                        }
+                    } while (newDiscount < 0 || newDiscount > 100);
                 }
                 case 3:
+                    // return to modify voucher menu
                     break;
                 case 4:
+                    // return to main menu
                     return;
                 default:
                     System.out.println("Invalid choice!");

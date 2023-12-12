@@ -18,7 +18,7 @@ public class Voucher {
         this.voucherID = voucherID;
         this.issueDate = new Timestamp(new Date().getTime()); // get current date and time using Timestamp class
         this.isRedeemed = false;
-        this.discount = (int) (Math.random() * 8 + 5) + "%"; // generate a random number between 5 and 8 for discount
+        this.discount = (int) (Math.random() * 4 + 5) + "%"; // generate a random number between 5 and 9 for discount
     }
 
     public String getVoucherID() {
@@ -86,7 +86,7 @@ public class Voucher {
                     System.out.println("Voucher ID: " + generateID());
                     System.out.println("Issue Date: " + new Timestamp(new Date().getTime()));
                     System.out.println("Is Redeemed: " + false);
-                    System.out.printf("Discount: %.2f\n ", (Math.random() * 8 + 5));
+                    System.out.printf("Discount: %.2f\n ", (Math.random() * 3 + 5));//
                     System.out.println();
                 }
             }
