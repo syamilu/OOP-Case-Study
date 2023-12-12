@@ -7,7 +7,7 @@ public class Main {
         int choice = 0;
         Scanner input = new Scanner(System.in);
 
-        Voucher v = new Voucher(null);
+        Voucher v = new Voucher();
 
         System.out.println("Welcome to the BlueShark Voucher Management System!");
         System.out.println("---------------------------------------------------");
@@ -29,7 +29,8 @@ public class Main {
             } while (choice < 1 || choice > 6);
 
             switch (choice) {
-                case 1: v.generateVoucher(); //FIrdaus = generateVoucher()
+                case 1: 
+                    v.generateVoucher(voucherList); //FIrdaus = generateVoucher()
                     break;
                 case 2:
                     break;
@@ -54,3 +55,4 @@ public class Main {
 
     }
 }
+

@@ -1,7 +1,9 @@
+import java.lang.reflect.Array;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.concurrent.RejectedExecutionException;
+import java.util.ArrayList;
 
 public class Voucher {
     private String voucherID;
@@ -11,7 +13,7 @@ public class Voucher {
     private static int voucherCount = 0;
     final int MAX_VOUCHER_COUNT = 30;
 
-    public Voucher(String voucherID) {
+    public Voucher() {
         voucherCount++;
         if (voucherCount > MAX_VOUCHER_COUNT) {
             throw new RejectedExecutionException("Maximum voucher count reached!");
@@ -70,7 +72,7 @@ public class Voucher {
         return sb.toString();
     }
 
-    public void generateVoucher(){
+    public void generateVoucher(ArrayList<Voucher> voucherList){
 
         Scanner input = new Scanner(System.in);
 
@@ -85,16 +87,11 @@ public class Voucher {
 
                 if(voucherCount > MAX_VOUCHER_COUNT)
                 {
-                    throw new RejectedExecutionException("Maximum voucher count reached!");
+                    System.out.println("Maximum voucher count reached!");
                 }
                 else
                 {
-                    System.out.println("Voucher #" + (i+1) + ":");
-                    System.out.println("Voucher ID: " + generateID());
-                    System.out.println("Issue Date: " + new Timestamp(new Date().getTime()));
-                    System.out.println("Is Redeemed: " + false);
-                    System.out.printf("Discount: %.2f\n ",(Math.random() * 8 + 5));
-                    System.out.println();
+                    voucherList.add(new Voucher());
                 }
             }
         }
@@ -102,6 +99,10 @@ public class Voucher {
         {
             System.out.println("Invalid number of voucher to generate!");
         }
+        
+    }
+
+    public void toArrayList(){
         
     }
 }
