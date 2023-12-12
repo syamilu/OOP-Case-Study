@@ -98,7 +98,7 @@ public class Voucher {
     }
 
     //ezlan redeemVoucher and deleteVoucher
-    public void redeemVoucher(ArrayList<Voucher> voucherList) {
+    public static void redeemVoucher(ArrayList<Voucher> voucherList) {
         Scanner scan = new Scanner(System.in);
         System.out.print("Enter the voucher ID to redeem: ");
         String vouchIDclaim = scan.nextLine();
@@ -119,7 +119,7 @@ public class Voucher {
     }
 
 
-    public void deleteVoucher(ArrayList<Voucher> voucherList){
+    public  static void deleteVoucher(ArrayList<Voucher> voucherList){
         Scanner scan = new Scanner(System.in);
         System.out.print("Enter the voucher ID to delete: ");
         String vouchIDdel = scan.nextLine();    

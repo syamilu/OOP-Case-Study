@@ -45,13 +45,13 @@ public class Main {
                     v.generateVoucher(voucherList); //FIrdaus = generateVoucher()
                     break;
                 case 2:
-                    v.redeemVoucher(voucherList);
+                    Voucher.redeemVoucher(voucherList);
                     break;
                 case 3:
                     modifyVoucher(voucherList);
                     break;
                 case 4:
-                    v.deleteVoucher(voucherList);
+                    Voucher.deleteVoucher(voucherList);
                     break;
                 case 5:
                     ViewVoucher.setVoucherList(voucherList);
