@@ -8,7 +8,7 @@ public class Main {
         int choice = 0;
         Scanner input = new Scanner(System.in);
 
-        Voucher v = new Voucher(null);
+        Voucher v = new Voucher();
 
         // test data(comment out if not in use)
         for (int i = 0; i < 5; i++) {
@@ -40,8 +40,9 @@ public class Main {
             }
             System.out.println();
             switch (choice) {
-                case 1:
-                    v.generateVoucher(); // FIrdaus = generateVoucher()
+
+                case 1: 
+                    v.generateVoucher(voucherList); //FIrdaus = generateVoucher()
                     break;
                 case 2:
                     v.redeemVoucher(voucherList);
@@ -169,3 +170,4 @@ public class Main {
         } while (true);
     }
 }
+
