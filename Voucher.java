@@ -16,8 +16,8 @@ public class Voucher {
     final int MAX_VOUCHER_COUNT = 30;
 
     public Voucher() {
-        voucherCount++;
-        this.voucherID = voucherID;
+        //voucherCount++;
+        this.voucherID = generateID();
         this.issueDate = new Timestamp(new Date().getTime()); // get current date and time using Timestamp class
         this.isRedeemed = false;
         this.discount = (int) (Math.random() * 4 + 5) + "%"; // generate a random number between 5 and 9 for discount
@@ -59,9 +59,9 @@ public class Voucher {
     public String generateID() {
 
         String alphanumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "1234567890" + "abcdefghijklmnopqrstuvwxyz";
-        StringBuilder sb = new StringBuilder(10);
+        StringBuilder sb = new StringBuilder(7);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 7; i++) {
             int index = (int) (alphanumericString.length() * Math.random());
 
             sb.append(alphanumericString.charAt(index));
