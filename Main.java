@@ -11,9 +11,9 @@ public class Main {
         Voucher v = new Voucher();
 
         // test data(comment out if not in use)
-        for (int i = 0; i < 5; i++) {
+          for (int i = 0; i < 5; i++) {
             String voucherID = "voucher" + (i + 1); // Generate a unique voucherID for each Voucher
-            Voucher testVoucher = new Voucher(voucherID); // Create a new Voucher object with the voucherID
+            Voucher testVoucher = new Voucher(); // Create a new Voucher object with the voucherID
             if (i == 2 || i == 4) {
                 testVoucher.setIsRedeemed();
             }
@@ -42,7 +42,7 @@ public class Main {
             switch (choice) {
 
                 case 1: 
-                    v.generateVoucher(voucherList); //FIrdaus = generateVoucher()
+                    v.generateVoucher(voucherList); 
                     break;
                 case 2:
                     Voucher.redeemVoucher(voucherList);
