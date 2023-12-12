@@ -1,6 +1,7 @@
 
 // Syafiq: Create a Voucher class
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.concurrent.RejectedExecutionException;
@@ -93,6 +94,42 @@ public class Voucher {
         } else {
             System.out.println("Invalid number of voucher to generate!");
         }
-
     }
+
+    //ezlan redeemVoucher and deleteVoucher
+    public void redeemVoucher(ArrayList<Voucher> voucherList) {
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Enter the voucher ID to redeem: ");
+        String vouchIDclaim = scan.nextLine();
+
+        for (Voucher voucher : voucherList) {
+            if (voucher.getVoucherID().equals(vouchIDclaim)) { //check if id is redeemed
+                if (!voucher.getIsRedeemed()) {
+                    voucher.isRedeemed = true;
+                    System.out.println("Voucher with ID " + voucher.getVoucherID() + " has been redeemed.");
+                } else {
+                    System.out.println("Voucher with ID " + voucher.getVoucherID() + " has already been redeemed.");
+                }
+                return; //return if the id is in the array
+            }
+        }
+        System.out.println("Voucher with ID " + vouchIDclaim + " not found.");
+        
+    }
+
+    public void deleteVoucher(ArrayList<Voucher> voucherList){
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Enter the voucher ID to delete: ");
+        String vouchIDdel = scan.nextLine();    
+        
+        for(Voucher voucher : voucherList){
+            if(voucher.getVoucherID().equals(vouchIDdel)){
+                voucherList.remove(voucher); //delete id in array
+                System.out.println("Voucher with ID "+voucher.getVoucherID()+" has been deleted");
+            }
+            
+        }
+        System.out.println("Voucher with ID " + vouchIDdel + " not found.");
+    }
+    
 }
