@@ -1,10 +1,7 @@
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.concurrent.RejectedExecutionException;
 
 // Syafiq: Create a Voucher class
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.concurrent.RejectedExecutionException;
@@ -97,7 +94,6 @@ public class Voucher {
         } else {
             System.out.println("Invalid number of voucher to generate!");
         }
-
     }
 
     //ezlan redeemVoucher and deleteVoucher
