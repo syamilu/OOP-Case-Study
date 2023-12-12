@@ -10,17 +10,6 @@ public class Main {
 
         Voucher v = new Voucher();
 
-        // test data(comment out if not in use)
-          for (int i = 0; i < 5; i++) {
-            String voucherID = "voucher" + (i + 1); // Generate a unique voucherID for each Voucher
-            Voucher testVoucher = new Voucher(); // Create a new Voucher object with the voucherID
-            if (i == 2 || i == 4) {
-                testVoucher.setIsRedeemed();
-            }
-            voucherList.add(testVoucher); // Add the new Voucher object to the list
-        }
-        // end of test data
-
         System.out.println("Welcome to the BlueShark Voucher Management System!");
         System.out.println("---------------------------------------------------");
         do {
@@ -41,8 +30,8 @@ public class Main {
             System.out.println();
             switch (choice) {
 
-                case 1: 
-                    v.generateVoucher(voucherList); 
+                case 1:
+                    v.generateVoucher(voucherList);
                     break;
                 case 2:
                     Voucher.redeemVoucher(voucherList);
@@ -170,4 +159,3 @@ public class Main {
         } while (true);
     }
 }
-
