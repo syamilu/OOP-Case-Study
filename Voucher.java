@@ -11,7 +11,7 @@ public class Voucher {
     private boolean isRedeemed;
     private String discount;
     private static int voucherCount = 0;
-    final int MAX_VOUCHER_COUNT = 30;
+    final static int MAX_VOUCHER_COUNT = 30;
 
     public Voucher() {
         // voucherCount++;
@@ -68,7 +68,8 @@ public class Voucher {
         return sb.toString();
     }
 
-    public void generateVoucher(ArrayList<Voucher> voucherList) {
+    
+    public static void generateVoucher(ArrayList<Voucher> voucherList) {
 
         Scanner input = new Scanner(System.in);
 
@@ -76,16 +77,24 @@ public class Voucher {
         int num = input.nextInt();
 
         if (num > 0 && num <= 30) {
-            for (int i = 0; i < num; i++) {
-                voucherCount++;
+            voucherCount += num;
 
-                if (voucherCount > MAX_VOUCHER_COUNT) {
-                    System.out.println("Maximum voucher count reached!");
-                } else {
+            if(voucherCount > MAX_VOUCHER_COUNT){
+                System.out.println("Voucher count exceeded!");
+                voucherCount -= num;
+                return;
+            }
+            else
+            {
+                for (int i = 0;i<num;i++)
+                {
                     voucherList.add(new Voucher());
                 }
             }
-        } else {
+
+        }
+        else 
+        {
             System.out.println("Invalid number of voucher to generate!");
         }
     }
