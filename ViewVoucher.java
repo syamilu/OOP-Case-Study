@@ -81,7 +81,7 @@ public class ViewVoucher {
             System.out.println("Voucher ID: " + v.getVoucherID());
             System.out.println("Issue Date: " + v.getIssueDate());
             System.out.println("Redeemed: " + v.getIsRedeemed());
-            System.out.println("Discount: " + v.getDiscount());
+            System.out.println("Description: " + v.getDiscount());
             System.out.println("---------------------------------");
         }
     }
@@ -118,7 +118,7 @@ public class ViewVoucher {
                             System.out.println("Voucher ID: " + v.getVoucherID());
                             System.out.println("Issue Date: " + v.getIssueDate());
                             System.out.println("Redeemed: " + v.getIsRedeemed());
-                            System.out.println("Discount: " + v.getDiscount());
+                            System.out.println("Description: " + v.getDiscount());
                             System.out.println("---------------------------------");
                         }
                     }
@@ -130,7 +130,7 @@ public class ViewVoucher {
                             System.out.println("Voucher ID: " + v.getVoucherID());
                             System.out.println("Issue Date: " + v.getIssueDate());
                             System.out.println("Redeemed: " + v.getIsRedeemed());
-                            System.out.println("Discount: " + v.getDiscount());
+                            System.out.println("Description: " + v.getDiscount());
                             System.out.println("---------------------------------");
                         }
                     }
@@ -155,7 +155,7 @@ public class ViewVoucher {
                 System.out.println("Voucher ID: " + v.getVoucherID());
                 System.out.println("Issue Date: " + v.getIssueDate());
                 System.out.println("Redeemed: " + v.getIsRedeemed());
-                System.out.println("Discount: " + v.getDiscount());
+                System.out.println("Description: " + v.getDiscount());
                 System.out.println("---------------------------------");
                 found = true;
                 return;
