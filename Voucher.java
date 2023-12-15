@@ -54,6 +54,10 @@ public class Voucher {
         this.discount = description + "%";
     }
 
+    public void setVoucherCount(int count){
+        this.voucherCount = count;
+    }
+
     // Firdaus = generateiD and generateVoucher
     public String generateID() {
 
@@ -126,7 +130,9 @@ public class Voucher {
             if(voucher.getVoucherID().equals(vouchIDdel)){
                 voucherList.remove(voucher); //delete id in array
                 System.out.println("Voucher with ID "+voucher.getVoucherID()+" has been deleted");
+            
             }
+            
             
         }
         System.out.println("Voucher with ID " + vouchIDdel + " not found.");
