@@ -44,13 +44,13 @@ public class Main {
                     v.generateVoucher(); // FIrdaus = generateVoucher()
                     break;
                 case 2:
-                    Voucher.redeemVoucher(voucherList);
+                    redeemVoucher(voucherList);
                     break;
                 case 3:
                     modifyVoucher(voucherList);
                     break;
                 case 4:
-                    Voucher.deleteVoucher(voucherList);
+                    deleteVoucher(voucherList);
                     break;
                 case 5:
                     ViewVoucher.setVoucherList(voucherList);
@@ -67,6 +67,27 @@ public class Main {
         } while (choice != 6);
         input.close();
 
+    }
+
+    //ezlan redeemVoucher and deleteVoucher
+    public static void redeemVoucher(ArrayList<Voucher> voucherList) {
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Enter the voucher ID to redeem: ");
+        String vouchIDclaim = scan.nextLine();
+
+        for (Voucher voucher : voucherList) {
+            if (voucher.getVoucherID().equals(vouchIDclaim)) { //check if id is redeemed
+                if (!voucher.getIsRedeemed()) {
+                    voucher.setIsRedeemed();
+                    System.out.println("Voucher with ID " + voucher.getVoucherID() + " has been redeemed.");
+                } else {
+                    System.out.println("Voucher with ID " + voucher.getVoucherID() + " has already been redeemed.");
+                }
+                return; //return if the id is in the array
+            }
+        }
+        System.out.println("Voucher with ID " + vouchIDclaim + " not found.");
+        
     }
 
     // Syafiq: Method to modify voucher
@@ -168,4 +189,23 @@ public class Main {
             }
         } while (true);
     }
+
+    public  static void deleteVoucher(ArrayList<Voucher> voucherList){
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Enter the voucher ID to delete: ");
+        String vouchIDdel = scan.nextLine();    
+        
+        for(Voucher voucher : voucherList){
+            if(voucher.getVoucherID().equals(vouchIDdel)){
+                voucherList.remove(voucher); //delete id in array
+                System.out.println("Voucher with ID "+voucher.getVoucherID()+" has been deleted");
+                if(voucher.getIsRedeemed()){
+                    int countt = Voucher.getVoucherCount()-1;// minus one voucher count
+                    voucher.setVoucherCount(countt);
+                }
+            }
+        }
+        System.out.println("Voucher with ID " + vouchIDdel + " not found.");
+    }
+
 }
