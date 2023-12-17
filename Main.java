@@ -3,6 +3,7 @@ import java.util.Scanner;
 import java.util.InputMismatchException;
 
 public class Main {
+    // Syamil - main method
     public static void main(String[] args) {
         ArrayList<Voucher> voucherList = new ArrayList<>();
         int choice = 0;
@@ -101,7 +102,6 @@ public class Main {
                 System.out.println("---------------------------------");
             } else {
                 System.out.println("Voucher has been redeemed. Cannot modify.");
-                input.close();
                 return;
             }
 
