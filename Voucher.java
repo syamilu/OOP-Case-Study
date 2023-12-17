@@ -14,7 +14,7 @@ public class Voucher {
     final static int MAX_VOUCHER_COUNT = 30;
 
     public Voucher() {
-        // voucherCount++;
+        voucherCount++;
         this.voucherID = generateID();
         this.issueDate = new Timestamp(new Date().getTime()); // get current date and time using Timestamp class
         this.isRedeemed = false;
@@ -53,6 +53,10 @@ public class Voucher {
         this.discount = description + "%";
     }
 
+    public void setVoucherCount(int voucherCount) {
+        this.voucherCount = voucherCount;
+    }
+
     // Firdaus = generateiD and generateVoucher
     public String generateID() {
 
@@ -69,35 +73,6 @@ public class Voucher {
     }
 
     
-    public static void generateVoucher(ArrayList<Voucher> voucherList) {
-
-        Scanner input = new Scanner(System.in);
-
-        System.out.println("Enter the number of voucher to generate: ");
-        int num = input.nextInt();
-
-        if (num > 0 && num <= 30) {
-            voucherCount += num;
-
-            if(voucherCount > MAX_VOUCHER_COUNT){
-                System.out.println("Voucher count exceeded!");
-                voucherCount -= num;
-                return;
-            }
-            else
-            {
-                for (int i = 0;i<num;i++)
-                {
-                    voucherList.add(new Voucher());
-                }
-            }
-
-        }
-        else 
-        {
-            System.out.println("Invalid number of voucher to generate!");
-        }
-    }
 
     // ezlan redeemVoucher and deleteVoucher
     public static void redeemVoucher(ArrayList<Voucher> voucherList) {
@@ -120,6 +95,7 @@ public class Voucher {
 
     }
 
+    
     public static void deleteVoucher(ArrayList<Voucher> voucherList) {
         Scanner scan = new Scanner(System.in);
         System.out.print("Enter the voucher ID to delete: ");
