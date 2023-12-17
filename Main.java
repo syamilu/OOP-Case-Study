@@ -40,7 +40,7 @@ public class Main {
             switch (choice) {
 
                 case 1:
-                    Voucher.generateVoucher(voucherList);
+                    generateVoucher(voucherList);
                     break;
                 case 2:
                     Voucher.redeemVoucher(voucherList);
@@ -297,4 +297,47 @@ public class Main {
         } while (true);
     }
     // end of method viewVoucher
+
+    // Firdaus: Method to generate voucher
+    public static void generateVoucher(ArrayList<Voucher> voucherlList){
+
+        Scanner input = new Scanner(System.in);
+        int num = 0;
+
+        System.out.println("*********************");
+        System.out.println("*** GENERATE VOUCHER ***");
+        System.out.println("*********************");
+        System.out.println("Enter the number of voucher to generate: ");
+        
+        try{
+            num = input.nextInt();
+        }catch(InputMismatchException e){
+            System.out.println("Invalid input. Please enter an integer.");
+            input.next(); // consume the invalid input
+        }
+
+        int voucherCount = Voucher.getVoucherCount();
+
+        if(num > 0 && num <= Voucher.MAX_VOUCHER_COUNT){
+
+            voucherCount += num;
+            
+            if(voucherCount > Voucher.MAX_VOUCHER_COUNT){
+                System.out.println("Voucher count exceeded. Cannot generate voucher.");
+                voucherCount -= num;
+                return;
+            }
+            else{
+                for(int i = 0; i < num; i++){
+                    voucherlList.add(new Voucher());
+                }
+                System.out.println(num + " vouchers generated successfully!");
+            }
+        }
+        else
+        {
+            System.out.println("Invalid input!");
+        }
+    }
+
 }
