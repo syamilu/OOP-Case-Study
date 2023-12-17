@@ -299,7 +299,7 @@ public class Main {
     // end of method viewVoucher
 
     // Firdaus: Method to generate voucher
-    public static void generateVoucher(ArrayList<Voucher> voucherlList){
+    public static void generateVoucher(ArrayList<Voucher> voucherList){
 
         Scanner input = new Scanner(System.in);
         int num = 0;
@@ -329,15 +329,12 @@ public class Main {
             }
             else{
                 for(int i = 0; i < num; i++){
-                    voucherlList.add(new Voucher());
+                    voucherList.add(new Voucher());
                 }
                 System.out.println(num + " vouchers generated successfully!");
             }
         }
-        else
-        {
-            System.out.println("Invalid input!");
-        }
+        
     }
 
 }

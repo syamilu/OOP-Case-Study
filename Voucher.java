@@ -14,7 +14,7 @@ public class Voucher {
     final static int MAX_VOUCHER_COUNT = 30;
 
     public Voucher() {
-        // voucherCount++;
+        voucherCount++;
         this.voucherID = generateID();
         this.issueDate = new Timestamp(new Date().getTime()); // get current date and time using Timestamp class
         this.isRedeemed = false;
