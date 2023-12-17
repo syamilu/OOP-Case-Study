@@ -1,9 +1,7 @@
 
 // Syafiq: Create a Voucher class
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Scanner;
 
 public class Voucher {
     private String voucherID;
@@ -41,9 +39,6 @@ public class Voucher {
         return voucherCount;
     }
 
-    public void setVoucherCount(int count){
-        this.voucherCount = count;
-    }
     public void setVoucherID(String voucherID) {
         this.voucherID = voucherID;
     }
@@ -57,7 +52,7 @@ public class Voucher {
     }
 
     public void setVoucherCount(int voucherCount) {
-        this.voucherCount = voucherCount;
+        Voucher.voucherCount = voucherCount;
     }
 
     // Firdaus = generateiD and generateVoucher
@@ -73,5 +68,5 @@ public class Voucher {
         }
 
         return sb.toString();
-    }  
+    }
 }
