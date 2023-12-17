@@ -41,6 +41,9 @@ public class Voucher {
         return voucherCount;
     }
 
+    public void setVoucherCount(int count){
+        this.voucherCount = count;
+    }
     public void setVoucherID(String voucherID) {
         this.voucherID = voucherID;
     }
@@ -70,48 +73,5 @@ public class Voucher {
         }
 
         return sb.toString();
-    }
-
-    
-
-    // ezlan redeemVoucher and deleteVoucher
-    public static void redeemVoucher(ArrayList<Voucher> voucherList) {
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Enter the voucher ID to redeem: ");
-        String vouchIDclaim = scan.nextLine();
-
-        for (Voucher voucher : voucherList) {
-            if (voucher.getVoucherID().equals(vouchIDclaim)) { // check if id is redeemed
-                if (!voucher.getIsRedeemed()) {
-                    voucher.isRedeemed = true;
-                    System.out.println("Voucher with ID " + voucher.getVoucherID() + " has been redeemed.");
-                } else {
-                    System.out.println("Voucher with ID " + voucher.getVoucherID() + " has already been redeemed.");
-                }
-                return; // return if the id is in the array
-            }
-        }
-        System.out.println("Voucher with ID " + vouchIDclaim + " not found.");
-
-    }
-
-    
-    public static void deleteVoucher(ArrayList<Voucher> voucherList) {
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Enter the voucher ID to delete: ");
-        String vouchIDdel = scan.nextLine();
-
-        for (Voucher voucher : voucherList) {
-            if (voucher.getVoucherID().equals(vouchIDdel)) {
-                voucherList.remove(voucher); // delete id in array
-                System.out.println("Voucher with ID " + voucher.getVoucherID() + " has been deleted");
-            }
-
-        }
-        System.out.println("Voucher with ID " + vouchIDdel + " not found.");
-    }
-
-    public void toArrayList() {
-
-    }
+    }  
 }

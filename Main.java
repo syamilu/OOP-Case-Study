@@ -40,16 +40,17 @@ public class Main {
             switch (choice) {
 
                 case 1:
+
                     generateVoucher(voucherList);
                     break;
                 case 2:
-                    Voucher.redeemVoucher(voucherList);
+                    redeemVoucher(voucherList);
                     break;
                 case 3:
                     modifyVoucher(voucherList);
                     break;
                 case 4:
-                    Voucher.deleteVoucher(voucherList);
+                    deleteVoucher(voucherList);
                     break;
                 case 5:
                     viewVoucher(voucherList);
@@ -65,6 +66,41 @@ public class Main {
         } while (choice != 6);
         input.close();
 
+    }
+
+    //ezlan redeemVoucher and deleteVoucher
+    public static void redeemVoucher(ArrayList<Voucher> voucherList) {
+        Scanner scan= new Scanner(System.in);
+        // Input validation loop
+        String vouchIDclaim;
+        do {
+            try {
+             System.out.print("Enter the voucher ID to redeem: ");
+                vouchIDclaim = scan.nextLine();
+            
+                if (vouchIDclaim.isEmpty()) {
+                    throw new IllegalArgumentException("Voucher ID cannot be empty.");
+                }
+            
+                break; // Exit the loop if the input is valid
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (true);
+
+        for (Voucher voucher : voucherList) {
+            if (voucher.getVoucherID().equals(vouchIDclaim)) { //check if id is redeemed
+                if (!voucher.getIsRedeemed()) {
+                    voucher.setIsRedeemed();
+                    System.out.println("Voucher with ID " + voucher.getVoucherID() + " redeemed.");
+                } else {
+                    System.out.println("Voucher with ID " + voucher.getVoucherID() + " has already been redeemed.");
+                }
+                return; //return if the id is in the array
+            }
+        }
+        System.out.println("Voucher with ID " + vouchIDclaim + " not found.");
+        
     }
 
     // Syafiq: Method to modify voucher
@@ -167,6 +203,39 @@ public class Main {
         } while (true);
     }
 
+
+    public  static void deleteVoucher(ArrayList<Voucher> voucherList){
+        Scanner scan = new Scanner(System.in);
+        // Input validation loop
+         String vouchIDdel;
+        do {
+            try {
+                System.out.print("Enter the voucher ID to delete: ");
+                vouchIDdel = scan.nextLine();
+            
+                if (vouchIDdel.isEmpty()) {
+                     throw new IllegalArgumentException("Voucher ID cannot be empty.");
+                }
+
+                break; // Exit the loop if the input is valid
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (true);
+
+        for(Voucher voucher : voucherList){
+            if(voucher.getVoucherID().equals(vouchIDdel)){
+                voucherList.remove(voucher); //delete id in array
+                System.out.println("Voucher with ID "+voucher.getVoucherID()+" deleted");
+                if(voucher.getIsRedeemed()){
+                    int countt = Voucher.getVoucherCount()-1;// minus one voucher count
+                    voucher.setVoucherCount(countt);
+                }
+            }
+        }
+        System.out.println("Voucher with ID " + vouchIDdel + " not found.");
+    }
+  
     // Syamil : Method to view voucher
     public static void viewVoucher(ArrayList<Voucher> voucherList) {
         // check if no voucher available
