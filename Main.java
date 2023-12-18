@@ -279,7 +279,7 @@ public class Main {
     // Syamil : Method to view voucher
     public static void viewVoucher(ArrayList<Voucher> voucherList) {
         // check if no voucher available
-        if (Voucher.getVoucherCount() == 0) {
+        if (voucherList.isEmpty()) {
             System.out.println("No voucher available!");
             return;
         }
