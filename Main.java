@@ -68,20 +68,20 @@ public class Main {
 
     }
 
-    //ezlan redeemVoucher and deleteVoucher
+    // ezlan redeemVoucher and deleteVoucher
     public static void redeemVoucher(ArrayList<Voucher> voucherList) {
-        Scanner scan= new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
         // Input validation loop
         String vouchIDclaim;
         do {
             try {
-             System.out.print("Enter the voucher ID to redeem: ");
+                System.out.print("Enter the voucher ID to redeem: ");
                 vouchIDclaim = scan.nextLine();
-            
+
                 if (vouchIDclaim.isEmpty()) {
                     throw new IllegalArgumentException("Voucher ID cannot be empty.");
                 }
-            
+
                 break; // Exit the loop if the input is valid
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
@@ -89,44 +89,52 @@ public class Main {
         } while (true);
 
         for (Voucher voucher : voucherList) {
-            if (voucher.getVoucherID().equals(vouchIDclaim)) { //check if id is redeemed
+            if (voucher.getVoucherID().equals(vouchIDclaim)) { // check if id is redeemed
                 if (!voucher.getIsRedeemed()) {
                     voucher.setIsRedeemed();
                     System.out.println("Voucher with ID " + voucher.getVoucherID() + " redeemed.");
                 } else {
                     System.out.println("Voucher with ID " + voucher.getVoucherID() + " has already been redeemed.");
                 }
-                return; //return if the id is in the array
+                return; // return if the id is in the array
             }
         }
         System.out.println("Voucher with ID " + vouchIDclaim + " not found.");
-        
+
     }
 
-    // Syafiq: Method to modify voucher
+    // Syafiq(2220697): Method to modify voucher
     public static void modifyVoucher(ArrayList<Voucher> voucherList) {
         Scanner input = new Scanner(System.in);
+
+        if (voucherList.isEmpty()) {
+            System.out.println("No voucher available!");
+            return;
+        }
+
         System.out.println("*** Modify Voucher ***");
         System.out.println("*********************");
         do {
             boolean found = false;
             Voucher v1 = null;
-            System.out.print("Enter the voucher ID to modify: ");
-            String voucherID = input.nextLine();
-            for (Voucher v : voucherList) {
-                // Checking for any match for given voucherID and storing it in a variable
-                if (v.getVoucherID().equals(voucherID)) {
-                    v1 = v;
-                    found = true;
-                    break;
+            if (voucherList.size() == 1) {
+                v1 = voucherList.get(0);
+                found = true;
+                System.out.println("No. of available vouchers: 1");
+            } else {
+                System.out.print("Enter the voucher ID to modify: ");
+                String voucherID = input.nextLine();
+                for (Voucher v : voucherList) {
+                    // Checking for any match for given voucherID and storing it in a variable
+                    if (v.getVoucherID().equals(voucherID)) {
+                        v1 = v;
+                        found = true;
+                        break;
+                    }
                 }
             }
 
-            if (!found) {
-                System.out.println("Voucher not found!");
-                return;
-            } else if (!v1.getIsRedeemed()) // Display voucher details if voucher is not redeemed
-
+            if (v1 != null && !v1.getIsRedeemed() && found) // Display voucher details if voucher is not redeemed
             {
                 System.out.println("Voucher Details :-");
                 System.out.println("---------------------------------");
@@ -134,87 +142,119 @@ public class Main {
                 System.out.println("Issue Date: " + v1.getIssueDate());
                 System.out.println("Discount: " + v1.getDiscount());
                 System.out.println("---------------------------------");
-            } else {
-                System.out.println("Voucher has been redeemed. Cannot modify.");
-                return;
-            }
 
-            System.out.println("\nModify Option:");
-            System.out.println("1. Modify voucher ID");
-            System.out.println("2. Modify discount rates");
-            System.out.println("3. Modify another voucher");
-            System.out.println("4. Back to main menu");
+                System.out.println("\nModify Option:");
+                System.out.println("1. Modify voucher ID");
+                System.out.println("2. Modify discount rates");
+                System.out.println("3. Back to main menu");
 
-            // check input exception
-            int choice = 0;
-            do {
-                choice = 0;
-                try {
-                    System.out.print("Enter your choice: ");
-                    choice = input.nextInt();
-                    if (choice < 1 || choice > 3) {
-                        System.out.println("Invalid choice. Please enter a number between 1 and 3.");
+                // check input exception
+                int choice = 0;
+                do {
+                    choice = 0;
+                    try {
+                        System.out.print("Enter your choice: ");
+                        choice = input.nextInt();
+                        if (choice < 1 || choice > 3) {
+                            System.out.println("Invalid choice. Please enter a number between 1 and 3.");
+                        }
+                    } catch (InputMismatchException e) {
+                        System.out.println("Invalid input. Please enter an integer.");
+                        input.next(); // consume the invalid input
                     }
-                } catch (InputMismatchException e) {
-                    System.out.println("Invalid input. Please enter an integer.");
-                    input.next(); // consume the invalid input
-                }
-            } while (choice < 1 || choice > 3);
+                } while (choice < 1 || choice > 3);
 
-            input.nextLine();
+                input.nextLine();
 
-            switch (choice) {
-                case 1: {
-                    System.out.println("Enter the new voucher ID: ");
-                    String newVoucherID = input.nextLine();
-                    v1.setVoucherID(newVoucherID);
-                    System.out.println("Voucher ID has been modified.");
-                    return;
-                }
-                case 2: {
-                    int newDiscount = 0;
-                    do {
-                        System.out.println("Enter the new discount rate: ");
-                        // input validation and error handling
-                        try {
-                            newDiscount = input.nextInt();
-                            if (newDiscount < 0 || newDiscount > 100) {
-                                System.out.println("Invalid input. Please enter a number between 0 and 100.");
+                switch (choice) {
+                    case 1: {
+                        boolean exists = false;
+                        System.out.println("\nEnter the new voucher ID: ");
+                        String newVoucherID = input.nextLine();
+                        for (Voucher v : voucherList) {
+                            // checks if the new voucher ID already exists
+                            if (newVoucherID.equals(v.getVoucherID())) {
+                                System.out.println("Voucher ID " + newVoucherID + " already exists!");
+                                exists = true;
+                                break;
                             } else {
-                                v1.setDiscount(newDiscount);
-                                System.out.println("Discount rate has been modified.");
+                                continue;
+                            }
+                        }
+                        if (!exists) {
+                            v1.setVoucherID(newVoucherID);
+                            System.out.println("Voucher ID has been modified.");
+                        }
+                        break;
+                    }
+                    case 2: {
+                        int newDiscount = 0;
+                        do {
+                            System.out.println("\nEnter the new discount rate: ");
+                            // input validation and error handling
+                            try {
+                                newDiscount = input.nextInt();
+                                if (newDiscount < 0 || newDiscount > 100) {
+                                    System.out.println("Invalid input. Please enter a number between 0 and 100.");
+                                } else if (v1.getDiscount().equals(newDiscount + "%")) {
+                                    System.out.println("Discount rate is the same as the current discount rate.");
+                                    break;
+                                } else {
+                                    v1.setDiscount(newDiscount);
+                                    System.out.println("Discount rate has been modified.");
+                                    break;
+                                }
+                            } catch (InputMismatchException e) {
+                                System.out.println("Invalid input. Integers only.");
                                 return;
                             }
-                        } catch (InputMismatchException e) {
-                            System.out.println("Invalid input. Integers only.");
-                            return;
-                        }
-                    } while (newDiscount < 0 || newDiscount > 100);
+                        } while (newDiscount < 0 || newDiscount > 100);
+                        break;
+                    }
+                    case 3:
+                        // return to main menu
+                        return;
+                    default:
+                        System.out.println("Invalid choice!");
                 }
-                case 3:
-                    // return to modify voucher menu
-                    break;
-                case 4:
-                    // return to main menu
-                    return;
-                default:
-                    System.out.println("Invalid choice!");
+            } else if (!found) {
+                System.out.println("Voucher not found!");
+            } else {
+                System.out.println("Voucher has already been redeemed!");
             }
+
+            char continueChoice = 'Y';
+            do {
+                System.out.println("\nDo you want to modify another voucher? (Y/N)");
+                try {
+                    continueChoice = input.next().charAt(0);
+                    if (continueChoice == 'N' || continueChoice == 'n') {
+                        return;
+                    } else if (!(continueChoice == 'Y' || continueChoice == 'y')) {
+                        System.out.println("Invalid input. Please enter Y or N.");
+                    } else {
+                        input.nextLine();
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input. Please enter one character only.");
+                    input.next(); // consume the invalid input
+                }
+            } while (!(continueChoice == 'Y' || continueChoice == 'y'));
+
         } while (true);
     }
 
-
-    public  static void deleteVoucher(ArrayList<Voucher> voucherList){
+    public static void deleteVoucher(ArrayList<Voucher> voucherList) {
         Scanner scan = new Scanner(System.in);
         // Input validation loop
-         String vouchIDdel;
+        String vouchIDdel;
         do {
             try {
                 System.out.print("Enter the voucher ID to delete: ");
                 vouchIDdel = scan.nextLine();
-            
+
                 if (vouchIDdel.isEmpty()) {
-                     throw new IllegalArgumentException("Voucher ID cannot be empty.");
+                    throw new IllegalArgumentException("Voucher ID cannot be empty.");
                 }
 
                 break; // Exit the loop if the input is valid
@@ -223,19 +263,19 @@ public class Main {
             }
         } while (true);
 
-        for(Voucher voucher : voucherList){
-            if(voucher.getVoucherID().equals(vouchIDdel)){
-                voucherList.remove(voucher); //delete id in array
-                System.out.println("Voucher with ID "+voucher.getVoucherID()+" deleted");
-                if(voucher.getIsRedeemed()){
-                    int countt = Voucher.getVoucherCount()-1;// minus one voucher count
+        for (Voucher voucher : voucherList) {
+            if (voucher.getVoucherID().equals(vouchIDdel)) {
+                voucherList.remove(voucher); // delete id in array
+                System.out.println("Voucher with ID " + voucher.getVoucherID() + " deleted");
+                if (voucher.getIsRedeemed()) {
+                    int countt = Voucher.getVoucherCount() - 1;// minus one voucher count
                     voucher.setVoucherCount(countt);
                 }
             }
         }
         System.out.println("Voucher with ID " + vouchIDdel + " not found.");
     }
-  
+
     // Syamil : Method to view voucher
     public static void viewVoucher(ArrayList<Voucher> voucherList) {
         // check if no voucher available
@@ -368,7 +408,7 @@ public class Main {
     // end of method viewVoucher
 
     // Firdaus: Method to generate voucher
-    public static void generateVoucher(ArrayList<Voucher> voucherList){
+    public static void generateVoucher(ArrayList<Voucher> voucherList) {
 
         Scanner input = new Scanner(System.in);
         int num = 0;
@@ -377,33 +417,32 @@ public class Main {
         System.out.println("*** GENERATE VOUCHER ***");
         System.out.println("*********************");
         System.out.println("Enter the number of voucher to generate: ");
-        
-        try{
+
+        try {
             num = input.nextInt();
-        }catch(InputMismatchException e){
+        } catch (InputMismatchException e) {
             System.out.println("Invalid input. Please enter an integer.");
             input.next(); // consume the invalid input
         }
 
         int voucherCount = Voucher.getVoucherCount();
 
-        if(num > 0 && num <= Voucher.MAX_VOUCHER_COUNT){
+        if (num > 0 && num <= Voucher.MAX_VOUCHER_COUNT) {
 
             voucherCount += num;
-            
-            if(voucherCount > Voucher.MAX_VOUCHER_COUNT){
+
+            if (voucherCount > Voucher.MAX_VOUCHER_COUNT) {
                 System.out.println("Voucher count exceeded. Cannot generate voucher.");
                 voucherCount -= num;
                 return;
-            }
-            else{
-                for(int i = 0; i < num; i++){
+            } else {
+                for (int i = 0; i < num; i++) {
                     voucherList.add(new Voucher());
                 }
                 System.out.println(num + " vouchers generated successfully!");
             }
         }
-        
+
     }
 
 }
