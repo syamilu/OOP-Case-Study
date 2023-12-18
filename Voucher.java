@@ -1,5 +1,5 @@
 
-// Syafiq: Create a Voucher class
+// Syafiq (2220697): Create a Voucher class
 import java.sql.Timestamp;
 import java.util.Date;
 
