@@ -107,34 +107,50 @@ public class Main {
     public static void modifyVoucher(ArrayList<Voucher> voucherList) {
         Scanner input = new Scanner(System.in);
 
-        if (voucherList.isEmpty()) {
-            System.out.println("No voucher available!");
+        if (NewVoucherCount(voucherList) == 0) {
+            System.out.println("No new voucher available!");
             return;
         }
 
+        System.out.println("**********************");
         System.out.println("*** Modify Voucher ***");
-        System.out.println("*********************");
+        System.out.println("**********************");
         do {
             boolean found = false;
             Voucher v1 = null;
-            if (voucherList.size() == 1) {
-                v1 = voucherList.get(0);
-                found = true;
-                System.out.println("No. of available vouchers: 1");
-            } else {
-                System.out.print("Enter the voucher ID to modify: ");
-                String voucherID = input.nextLine();
+            if (NewVoucherCount(voucherList) == 1) {
+                // Skipping input prompt if there's only one unredeemed voucher in the
+                // voucherList
                 for (Voucher v : voucherList) {
-                    // Checking for any match for given voucherID and storing it in a variable
-                    if (v.getVoucherID().equals(voucherID)) {
+                    if (!v.getIsRedeemed()) {
                         v1 = v;
                         found = true;
                         break;
                     }
                 }
+                System.out.println("No. of available vouchers: 1");
+            } else {
+                do {
+                    System.out.print("Enter the voucher ID to modify: ");
+                    String voucherID = input.nextLine();
+                    for (Voucher v : voucherList) {
+                        // Checking for any match for given voucherID and storing it in a variable
+                        if (v.getVoucherID().equals(voucherID)) {
+                            v1 = v;
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        System.out.println("Voucher not found!\n");
+                    } else {
+                        break;
+                    }
+                } while (!found);
             }
 
-            if (v1 != null && !v1.getIsRedeemed() && found) // Display voucher details if voucher is not redeemed
+            if (v1 != null && !v1.getIsRedeemed() && found)
+            // Display voucher details if voucher is found AND redeemed
             {
                 System.out.println("Voucher Details :-");
                 System.out.println("---------------------------------");
@@ -168,23 +184,32 @@ public class Main {
 
                 switch (choice) {
                     case 1: {
-                        boolean exists = false;
-                        System.out.println("\nEnter the new voucher ID: ");
-                        String newVoucherID = input.nextLine();
-                        for (Voucher v : voucherList) {
-                            // checks if the new voucher ID already exists
-                            if (newVoucherID.equals(v.getVoucherID())) {
-                                System.out.println("Voucher ID " + newVoucherID + " already exists!");
-                                exists = true;
-                                break;
+                        String newVoucherID;
+                        boolean unique;
+                        do {
+                            unique = false;
+                            System.out.println("\nEnter the new voucher ID: ");
+                            newVoucherID = input.nextLine();
+
+                            // Validate newVoucherID input to only accept alphanumeric characters
+                            if (!newVoucherID.matches("^[a-zA-Z0-9]*$")) {
+                                System.out.println("Invalid input! Only alphanumeric characters are allowed.");
                             } else {
-                                continue;
+                                for (Voucher v : voucherList) {
+                                    // checks if the new voucher ID already exists
+                                    if (newVoucherID.equals(v.getVoucherID())) {
+                                        System.out.println("Voucher ID " + newVoucherID + " already exists!");
+                                        unique = true;
+                                        break;
+                                    } else {
+                                        continue;
+                                    }
+                                }
                             }
-                        }
-                        if (!exists) {
-                            v1.setVoucherID(newVoucherID);
-                            System.out.println("Voucher ID has been modified.");
-                        }
+                        } while (!newVoucherID.matches("^[a-zA-Z0-9]*$") || unique);
+
+                        v1.setVoucherID(newVoucherID);
+                        System.out.println("Voucher ID has been modified.");
                         break;
                     }
                     case 2: {
@@ -194,8 +219,8 @@ public class Main {
                             // input validation and error handling
                             try {
                                 newDiscount = input.nextInt();
-                                if (newDiscount < 0 || newDiscount > 100) {
-                                    System.out.println("Invalid input. Please enter a number between 0 and 100.");
+                                if (newDiscount < 1 || newDiscount > 100) {
+                                    System.out.println("Invalid input. Please enter a number between 1 and 100.");
                                 } else if (v1.getDiscount().equals(newDiscount + "%")) {
                                     System.out.println("Discount rate is the same as the current discount rate.");
                                     break;
@@ -208,7 +233,7 @@ public class Main {
                                 System.out.println("Invalid input. Integers only.");
                                 return;
                             }
-                        } while (newDiscount < 0 || newDiscount > 100);
+                        } while (newDiscount < 1 || newDiscount > 100);
                         break;
                     }
                     case 3:
@@ -217,15 +242,18 @@ public class Main {
                     default:
                         System.out.println("Invalid choice!");
                 }
-            } else if (!found) {
-                System.out.println("Voucher not found!");
-            } else {
+            } else if (v1.getIsRedeemed()) {
                 System.out.println("Voucher has already been redeemed!");
+                return;
             }
 
             char continueChoice = 'Y';
             do {
-                System.out.println("\nDo you want to modify another voucher? (Y/N)");
+                if (NewVoucherCount(voucherList) > 1)
+                    System.out.println("\nDo you want to modify another voucher? (Y/N)");
+                else
+                    System.out
+                            .println("\nDo you want to modify voucher with ID " + v1.getVoucherID() + " again? (Y/N)");
                 try {
                     continueChoice = input.next().charAt(0);
                     if (continueChoice == 'N' || continueChoice == 'n') {
@@ -240,7 +268,6 @@ public class Main {
                     input.next(); // consume the invalid input
                 }
             } while (!(continueChoice == 'Y' || continueChoice == 'y'));
-
         } while (true);
     }
 
@@ -405,7 +432,16 @@ public class Main {
             System.out.println();
         } while (true);
     }
-    // end of method viewVoucher
+
+    public static int NewVoucherCount(ArrayList<Voucher> voucherList) {
+        int count = 0;
+        for (Voucher v : voucherList) {
+            if (v.getIsRedeemed() == false) {
+                count++;
+            }
+        }
+        return count;
+    } // end of Syafiq's method! :D
 
     // Firdaus: Method to generate voucher
     public static void generateVoucher(ArrayList<Voucher> voucherList) {
