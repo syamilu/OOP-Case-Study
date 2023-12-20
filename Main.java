@@ -443,42 +443,65 @@ public class Main {
         return count;
     } // end of Syafiq's method! :D
 
-    // Firdaus: Method to generate voucher
-    public static void generateVoucher(ArrayList<Voucher> voucherList) {
+    // Firdaus
+    //2222041
+    //Method to generate voucher
+    public static void generateVoucher(ArrayList<Voucher> voucherList){
 
         Scanner input = new Scanner(System.in);
         int num = 0;
-
-        System.out.println("*********************");
-        System.out.println("*** GENERATE VOUCHER ***");
-        System.out.println("*********************");
-        System.out.println("Enter the number of voucher to generate: ");
-
-        try {
-            num = input.nextInt();
-        } catch (InputMismatchException e) {
-            System.out.println("Invalid input. Please enter an integer.");
-            input.next(); // consume the invalid input
-        }
-
         int voucherCount = Voucher.getVoucherCount();
 
-        if (num > 0 && num <= Voucher.MAX_VOUCHER_COUNT) {
-
-            voucherCount += num;
-
-            if (voucherCount > Voucher.MAX_VOUCHER_COUNT) {
-                System.out.println("Voucher count exceeded. Cannot generate voucher.");
-                voucherCount -= num;
-                return;
-            } else {
-                for (int i = 0; i < num; i++) {
-                    voucherList.add(new Voucher());
-                }
-                System.out.println(num + " vouchers generated successfully!");
-            }
+        System.out.println("************************");
+        System.out.println("*** GENERATE VOUCHER ***");
+        System.out.println("************************");
+        
+        if(voucherList.size() == Voucher.MAX_VOUCHER_COUNT)
+        {
+            System.out.println("Unable to generate voucher. Maximum voucher count reached.");
+            return;
         }
-
+        
+        // Input validation loop
+        do{
+            System.out.println("\nEnter the number of vouchers to generate: ");
+            System.out.println("Maximum number of vouchers allowed: " + (Voucher.MAX_VOUCHER_COUNT - voucherList.size()));
+            try{
+                num = input.nextInt();
+                if(num >= 'a' && num <= 'z' || num >= 'A' && num <= 'Z')//check if input is not integer
+                {
+                    System.out.println("Invalid input. Please enter an integer.");
+                }
+                else if(num < 1 || num > Voucher.MAX_VOUCHER_COUNT) //check if input is not between 1 and 30
+                {
+                    System.out.println("Invalid input. Please enter a number between 1 and " + Voucher.MAX_VOUCHER_COUNT + ".");
+                }
+                else if((voucherCount += num) > Voucher.MAX_VOUCHER_COUNT) //check if input is more than 30
+                    {
+                    System.out.println("Unable to generate voucher. Maximum voucher count reached.");
+                    voucherCount -= num; //reset voucher count
+                }
+                else //generate voucher
+                {
+                voucherCount += num;
+                for(int i =0; i < num; i++)
+                    {
+                        voucherList.add(new Voucher());
+                    }
+                System.out.println(num + " voucher generated successfully!");
+                break; //exit loop
+            }
+                
+            }
+            catch(InputMismatchException e)
+            {
+                System.out.println("Invalid input. Please enter an integer.");
+                input.next();
+            }
+          
+        }while(num >= 'a' && num <= 'z' || num >= 'A' && num <= 'Z' || num < 1 || num > (Voucher.MAX_VOUCHER_COUNT - voucherList.size())); 
+        //end of input validation loop
+        
     }
 
 }
