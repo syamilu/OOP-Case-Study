@@ -55,12 +55,14 @@ public class Voucher {
         Voucher.voucherCount = voucherCount;
     }
 
-    // Firdaus = generateiD and generateVoucher
+    // Firdaus = generateiD method
     public String generateID() {
 
+        // generate a random alphanumeric string of length 7
         String alphanumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "1234567890" + "abcdefghijklmnopqrstuvwxyz";
         StringBuilder sb = new StringBuilder(7);
 
+        // generate a random index number and append the character at that index to the string builder
         for (int i = 0; i < 7; i++) {
             int index = (int) (alphanumericString.length() * Math.random());
 
