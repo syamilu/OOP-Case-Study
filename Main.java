@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.util.InputMismatchException;
 
 public class Main {
-    // Syamil - main method
+    // Wan Muhammad Syamil(2220561) - main method
     public static void main(String[] args) {
         ArrayList<Voucher> voucherList = new ArrayList<>();
         int choice = 0;
@@ -68,7 +68,7 @@ public class Main {
 
     }
 
-    // ezlan redeemVoucher and deleteVoucher
+    // Saidul Ezlan(2221095) redeemVoucher and deleteVoucher
     public static void redeemVoucher(ArrayList<Voucher> voucherList) {
         Scanner scan = new Scanner(System.in);
         // Input validation loop
@@ -101,6 +101,39 @@ public class Main {
         }
         System.out.println("Voucher with ID " + vouchIDclaim + " not found.");
 
+    }
+
+    // Saidul Ezlan(2221095) redeemVoucher and deleteVoucher
+    public static void deleteVoucher(ArrayList<Voucher> voucherList) {
+        Scanner scan = new Scanner(System.in);
+        // Input validation loop
+        String vouchIDdel;
+        do {
+            try {
+                System.out.print("Enter the voucher ID to delete: ");
+                vouchIDdel = scan.nextLine();
+
+                if (vouchIDdel.isEmpty()) {
+                    throw new IllegalArgumentException("Voucher ID cannot be empty.");
+                }
+
+                break; // Exit the loop if the input is valid
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (true);
+
+        for (Voucher voucher : voucherList) {
+            if (voucher.getVoucherID().equals(vouchIDdel)) {
+                voucherList.remove(voucher); // delete id in array
+                System.out.println("Voucher with ID " + voucher.getVoucherID() + " deleted");
+                if (voucher.getIsRedeemed()) {
+                    int countt = Voucher.getVoucherCount() - 1;// minus one voucher count
+                    voucher.setVoucherCount(countt);
+                }
+            }
+        }
+        System.out.println("Voucher with ID " + vouchIDdel + " not found.");
     }
 
     // Syafiq(2220697): Method to modify voucher
@@ -271,39 +304,17 @@ public class Main {
         } while (true);
     }
 
-    public static void deleteVoucher(ArrayList<Voucher> voucherList) {
-        Scanner scan = new Scanner(System.in);
-        // Input validation loop
-        String vouchIDdel;
-        do {
-            try {
-                System.out.print("Enter the voucher ID to delete: ");
-                vouchIDdel = scan.nextLine();
-
-                if (vouchIDdel.isEmpty()) {
-                    throw new IllegalArgumentException("Voucher ID cannot be empty.");
-                }
-
-                break; // Exit the loop if the input is valid
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-        } while (true);
-
-        for (Voucher voucher : voucherList) {
-            if (voucher.getVoucherID().equals(vouchIDdel)) {
-                voucherList.remove(voucher); // delete id in array
-                System.out.println("Voucher with ID " + voucher.getVoucherID() + " deleted");
-                if (voucher.getIsRedeemed()) {
-                    int countt = Voucher.getVoucherCount() - 1;// minus one voucher count
-                    voucher.setVoucherCount(countt);
-                }
+    public static int NewVoucherCount(ArrayList<Voucher> voucherList) {
+        int count = 0;
+        for (Voucher v : voucherList) {
+            if (v.getIsRedeemed() == false) {
+                count++;
             }
         }
-        System.out.println("Voucher with ID " + vouchIDdel + " not found.");
-    }
+        return count;
+    } // end of Syafiq's method! :D
 
-    // Syamil : Method to view voucher
+    // Wan Muhammad Syamil(2220561) : Method to view voucher
     public static void viewVoucher(ArrayList<Voucher> voucherList) {
         // check if no voucher available
         if (voucherList.isEmpty()) {
@@ -433,20 +444,10 @@ public class Main {
         } while (true);
     }
 
-    public static int NewVoucherCount(ArrayList<Voucher> voucherList) {
-        int count = 0;
-        for (Voucher v : voucherList) {
-            if (v.getIsRedeemed() == false) {
-                count++;
-            }
-        }
-        return count;
-    } // end of Syafiq's method! :D
-
     // Firdaus
-    //2222041
-    //Method to generate voucher
-    public static void generateVoucher(ArrayList<Voucher> voucherList){
+    // 2222041
+    // Method to generate voucher
+    public static void generateVoucher(ArrayList<Voucher> voucherList) {
 
         Scanner input = new Scanner(System.in);
         int num = 0;
@@ -455,53 +456,49 @@ public class Main {
         System.out.println("************************");
         System.out.println("*** GENERATE VOUCHER ***");
         System.out.println("************************");
-        
-        if(voucherList.size() == Voucher.MAX_VOUCHER_COUNT)
-        {
+
+        if (voucherList.size() == Voucher.MAX_VOUCHER_COUNT) {
             System.out.println("Unable to generate voucher. Maximum voucher count reached.");
             return;
         }
-        
+
         // Input validation loop
-        do{
+        do {
             System.out.println("\nEnter the number of vouchers to generate: ");
-            System.out.println("Maximum number of vouchers allowed: " + (Voucher.MAX_VOUCHER_COUNT - voucherList.size()));
-            try{
+            System.out
+                    .println("Maximum number of vouchers allowed: " + (Voucher.MAX_VOUCHER_COUNT - voucherList.size()));
+            try {
                 num = input.nextInt();
-                if(num >= 'a' && num <= 'z' || num >= 'A' && num <= 'Z')//check if input is not integer
+                if (num >= 'a' && num <= 'z' || num >= 'A' && num <= 'Z')// check if input is not integer
                 {
                     System.out.println("Invalid input. Please enter an integer.");
-                }
-                else if(num < 1 || num > Voucher.MAX_VOUCHER_COUNT) //check if input is not between 1 and 30
+                } else if (num < 1 || num > Voucher.MAX_VOUCHER_COUNT) // check if input is not between 1 and 30
                 {
-                    System.out.println("Invalid input. Please enter a number between 1 and " + Voucher.MAX_VOUCHER_COUNT + ".");
-                }
-                else if((voucherCount += num) > Voucher.MAX_VOUCHER_COUNT) //check if input is more than 30
-                    {
+                    System.out.println(
+                            "Invalid input. Please enter a number between 1 and " + Voucher.MAX_VOUCHER_COUNT + ".");
+                } else if ((voucherCount += num) > Voucher.MAX_VOUCHER_COUNT) // check if input is more than 30
+                {
                     System.out.println("Unable to generate voucher. Maximum voucher count reached.");
-                    voucherCount -= num; //reset voucher count
-                }
-                else //generate voucher
+                    voucherCount -= num; // reset voucher count
+                } else // generate voucher
                 {
-                voucherCount += num;
-                for(int i =0; i < num; i++)
-                    {
+                    voucherCount += num;
+                    for (int i = 0; i < num; i++) {
                         voucherList.add(new Voucher());
                     }
-                System.out.println(num + " voucher generated successfully!");
-                break; //exit loop
-            }
-                
-            }
-            catch(InputMismatchException e)
-            {
+                    System.out.println(num + " voucher generated successfully!");
+                    break; // exit loop
+                }
+
+            } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter an integer.");
                 input.next();
             }
-          
-        }while(num >= 'a' && num <= 'z' || num >= 'A' && num <= 'Z' || num < 1 || num > (Voucher.MAX_VOUCHER_COUNT - voucherList.size())); 
-        //end of input validation loop
-        
+
+        } while (num >= 'a' && num <= 'z' || num >= 'A' && num <= 'Z' || num < 1
+                || num > (Voucher.MAX_VOUCHER_COUNT - voucherList.size()));
+        // end of input validation loop
+
     }
 
 }
