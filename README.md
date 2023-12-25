@@ -8,7 +8,7 @@
 | Muhammad Firdaus bin Badrul Hisyam | 2222041 |generate voucher method and voucher class diagram|
 | Syafiq bin Yusni | 2220697 | Modify voucher method and voucher class |
 
-### Case Study : Voucher Dispenser System(VDS)
+### Case Study : Voucher Dispenser System
 Voucher Dispenser System is a system that allow user(admin or owner) to generate voucher that made up of 7 random alphanumeric for their customer. This system allow user to generate any number of voucher but the total of current generated voucher should not exceed 30. Once the voucher has been redeemed it will marked as redeemed. Thus its not valid to redeem it again. User also able to modify, delete and view vouchers.
 
 ### Class Diagram
