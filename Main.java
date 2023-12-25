@@ -69,7 +69,7 @@ public class Main {
 
     }
 
-    // Saidul Ezlan(2221095) redeemVoucher and deleteVoucher
+    // Saiful Ezlan(2221095) redeemVoucher and deleteVoucher
     public static void redeemVoucher(ArrayList<Voucher> voucherList) {
         Scanner scan = new Scanner(System.in);
         // Input validation loop
@@ -101,10 +101,9 @@ public class Main {
             }
         }
         System.out.println("Voucher with ID " + vouchIDclaim + " not found.");
-
     }
 
-    // Saidul Ezlan(2221095) redeemVoucher and deleteVoucher
+    // Saiful Ezlan(2221095) redeemVoucher and deleteVoucher
     public static void deleteVoucher(ArrayList<Voucher> voucherList) {
         Scanner scan = new Scanner(System.in);
         // Input validation loop
@@ -140,6 +139,7 @@ public class Main {
         
         System.out.println("Voucher with ID " + vouchIDdel + " not found.");
     }
+
 
     // Syafiq(2220697): Method to modify voucher
     public static void modifyVoucher(ArrayList<Voucher> voucherList) {

@@ -1,9 +1,7 @@
 
-// Syafiq: Create a Voucher class
+// Syafiq (2220697): Voucher class
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Scanner;
 
 public class Voucher {
     private String voucherID;
@@ -41,9 +39,6 @@ public class Voucher {
         return voucherCount;
     }
 
-    public void setVoucherCount(int count){
-        this.voucherCount = count;
-    }
     public void setVoucherID(String voucherID) {
         this.voucherID = voucherID;
     }
@@ -57,15 +52,20 @@ public class Voucher {
     }
 
     public void setVoucherCount(int voucherCount) {
-        this.voucherCount = voucherCount;
+        Voucher.voucherCount = voucherCount;
     }
 
-    // Firdaus = generateiD and generateVoucher
+    // Firdaus
+    // 2222041
+    // generateiD method
     public String generateID() {
 
+        // generate a random alphanumeric string of length 7
         String alphanumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "1234567890" + "abcdefghijklmnopqrstuvwxyz";
         StringBuilder sb = new StringBuilder(7);
 
+        // generate a random index number and append the character at that index to the
+        // string builder
         for (int i = 0; i < 7; i++) {
             int index = (int) (alphanumericString.length() * Math.random());
 
@@ -73,5 +73,5 @@ public class Voucher {
         }
 
         return sb.toString();
-    }  
+    }
 }
