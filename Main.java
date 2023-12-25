@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 
 public class Main {
     // Syamil - main method
@@ -221,17 +222,23 @@ public class Main {
             }
         } while (true);
 
-        for(Voucher voucher : voucherList){
+        // Using an iterator to safely remove elements
+        Iterator<Voucher> iterator = voucherList.iterator();
+        while(iterator.hasNext()){ //iterator is the current element
+            Voucher voucher = iterator.next();
             if(voucher.getVoucherID().equals(vouchIDdel)){
-                voucherList.remove(voucher); //delete id in array
+                iterator.remove(); //use iterator to remove the current element
                 System.out.println("Voucher with ID "+voucher.getVoucherID()+" deleted");
                 if(voucher.getIsRedeemed()){
                     int countt = Voucher.getVoucherCount()-1;// minus one voucher count
                     voucher.setVoucherCount(countt);
                 }
+                return; //exit method after removing voucher ID
             }
         }
+        
         System.out.println("Voucher with ID " + vouchIDdel + " not found.");
+        
     }
 
     // Syamil : Method to view voucher
