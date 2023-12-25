@@ -1,3 +1,4 @@
+
 // Syafiq: Create a Voucher class
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -55,6 +56,10 @@ public class Voucher {
         this.discount = description + "%";
     }
 
+    public void setVoucherCount(int voucherCount) {
+        this.voucherCount = voucherCount;
+    }
+
     // Firdaus = generateiD and generateVoucher
     public String generateID() {
 
@@ -68,37 +73,5 @@ public class Voucher {
         }
 
         return sb.toString();
-    }
-
-    
-    public static void generateVoucher(ArrayList<Voucher> voucherList) {
-
-        Scanner input = new Scanner(System.in);
-
-        System.out.println("Enter the number of voucher to generate: ");
-        int num = input.nextInt();
-
-        if (num > 0 && num <= 30) {
-            voucherCount += num;
-
-            if(voucherCount > MAX_VOUCHER_COUNT){
-                System.out.println("Voucher count exceeded!");
-                voucherCount -= num;
-                return;
-            }
-            else
-            {
-                for (int i = 0;i<num;i++)
-                {
-                    voucherList.add(new Voucher());
-                }
-            }
-
-        }
-        else 
-        {
-            System.out.println("Invalid number of voucher to generate!");
-        }
-        
-    }
+    }  
 }
