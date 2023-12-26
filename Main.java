@@ -73,7 +73,7 @@ public class Main {
     public static void redeemVoucher(ArrayList<Voucher> voucherList) {
         Scanner scan = new Scanner(System.in);
         String ans;
-        do{
+        do {
             if (voucherList.isEmpty()) {
                 System.out.println("No vouchers available for redemption.");
                 return;
@@ -88,7 +88,8 @@ public class Main {
 
                     if (vouchIDclaim.isEmpty()) {
                         throw new IllegalArgumentException("Voucher ID cannot be empty.");
-                    }else if(vouchIDclaim.equalsIgnoreCase("N")){
+                    } else if (vouchIDclaim.equalsIgnoreCase("N")) {
+                        System.out.println("Returning to Main Menu...");
                         return;
                     }
 
@@ -97,20 +98,20 @@ public class Main {
                     System.out.println(e.getMessage());
                 }
             } while (true);
-            boolean found=false;
+            boolean found = false;
             for (Voucher voucher : voucherList) {
                 if (voucher.getVoucherID().equals(vouchIDclaim)) { // check if id is redeemed
-                    found=true;
+                    found = true;
                     if (!voucher.getIsRedeemed()) {
                         voucher.setIsRedeemed();
                         System.out.println("Voucher with ID " + voucher.getVoucherID() + " redeemed.");
                     } else {
                         System.out.println("Voucher with ID " + voucher.getVoucherID() + " has already been redeemed.");
                     }
-                    break;//exit loop if voucer is found
+                    break;// exit loop if voucer is found
                 }
             }
-            if(!found){
+            if (!found) {
                 System.out.println("Voucher with ID " + vouchIDclaim + " not found.");
             }
             do {
@@ -125,14 +126,14 @@ public class Main {
                     System.out.println(e.getMessage());
                 }
             } while (true);
-        }while (!ans.equalsIgnoreCase("N"));
+        } while (!ans.equalsIgnoreCase("N"));
     }
 
     // Saiful Ezlan(2221095) redeemVoucher and deleteVoucher
     public static void deleteVoucher(ArrayList<Voucher> voucherList) {
         Scanner scan = new Scanner(System.in);
         String ans;
-        do{
+        do {
             if (voucherList.isEmpty()) {
                 System.out.println("No vouchers available for deletion.");
                 return;
@@ -143,12 +144,13 @@ public class Main {
                 try {
                     System.out.println("(Enter N to return to Main Menu)");
                     System.out.print("Enter the voucher ID to delete: ");
-                    
+
                     vouchIDdel = scan.nextLine();
 
                     if (vouchIDdel.isEmpty()) {
                         throw new IllegalArgumentException("Voucher ID cannot be empty.");
-                    }else if(vouchIDdel.equalsIgnoreCase("N")){
+                    } else if (vouchIDdel.equalsIgnoreCase("N")) {
+                        System.out.println("Returning to Main Menu...");
                         return;
                     }
 
@@ -160,26 +162,27 @@ public class Main {
             } while (true);
             // Using an iterator to safely remove elements
             Iterator<Voucher> iterator = voucherList.iterator();
-            boolean found=false;
+            boolean found = false;
             while (iterator.hasNext()) { // iterator is the current element
                 Voucher voucher = iterator.next();
                 if (voucher.getVoucherID().equals(vouchIDdel)) {
-                    found =true;
+                    found = true;
                     if (voucher.getIsRedeemed()) {
-                    System.out.println("Cannot delete a redeemed voucher with ID " + voucher.getVoucherID());
-                    // Don't return here so that it continues to the next iteration of the outer loop
-                    // return;
-                } else {
-                    iterator.remove(); // use iterator to remove the current element
-                    System.out.println("Voucher with ID " + voucher.getVoucherID() + " deleted");
-                    // Update the voucher count only if the voucher is deleted (not redeemed)
-                    int countt = Voucher.getVoucherCount() - 1;
+                        System.out.println("Cannot delete a redeemed voucher with ID " + voucher.getVoucherID());
+                        // Don't return here so that it continues to the next iteration of the outer
+                        // loop
+                        // return;
+                    } else {
+                        iterator.remove(); // use iterator to remove the current element
+                        System.out.println("Voucher with ID " + voucher.getVoucherID() + " deleted");
+                        // Update the voucher count only if the voucher is deleted not redeemed
+                        int countt = Voucher.getVoucherCount() - 1;
 
-                    voucher.setVoucherCount(countt);
+                        voucher.setVoucherCount(countt);
                     }
                 }
             }
-            if(!found){
+            if (!found) {
                 System.out.println("Voucher with ID " + vouchIDdel + " not found.");
             }
             do {
@@ -194,7 +197,7 @@ public class Main {
                     System.out.println(e.getMessage());
                 }
             } while (true);
-        }while (!ans.equalsIgnoreCase("N"));
+        } while (!ans.equalsIgnoreCase("N"));
     }
 
     // Syafiq(2220697): Method to modify voucher
@@ -565,9 +568,9 @@ public class Main {
                 {
                     System.out.println(
                             "Invalid input. Please enter a number between 1 and " + Voucher.MAX_VOUCHER_COUNT + ".");
-                } else if(num == 0){
+                } else if (num == 0) {
                     return;
-                }else if ((voucherCount += num) > Voucher.MAX_VOUCHER_COUNT) // check if input is more than 30
+                } else if ((voucherCount += num) > Voucher.MAX_VOUCHER_COUNT) // check if input is more than 30
                 {
                     System.out.println("Unable to generate voucher. Maximum voucher count reached.");
                     voucherCount -= num; // reset voucher count
