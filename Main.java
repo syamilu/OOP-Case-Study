@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 
 public class Main {
     // Wan Muhammad Syamil(2220561) - main method
@@ -68,7 +69,7 @@ public class Main {
 
     }
 
-    // Saidul Ezlan(2221095) redeemVoucher and deleteVoucher
+    // Saiful Ezlan(2221095) redeemVoucher and deleteVoucher
     public static void redeemVoucher(ArrayList<Voucher> voucherList) {
         Scanner scan = new Scanner(System.in);
         // Input validation loop
@@ -100,10 +101,9 @@ public class Main {
             }
         }
         System.out.println("Voucher with ID " + vouchIDclaim + " not found.");
-
     }
 
-    // Saidul Ezlan(2221095) redeemVoucher and deleteVoucher
+    // Saiful Ezlan(2221095) redeemVoucher and deleteVoucher
     public static void deleteVoucher(ArrayList<Voucher> voucherList) {
         Scanner scan = new Scanner(System.in);
         // Input validation loop
@@ -122,19 +122,24 @@ public class Main {
                 System.out.println(e.getMessage());
             }
         } while (true);
-
-        for (Voucher voucher : voucherList) {
-            if (voucher.getVoucherID().equals(vouchIDdel)) {
-                voucherList.remove(voucher); // delete id in array
-                System.out.println("Voucher with ID " + voucher.getVoucherID() + " deleted");
-                if (voucher.getIsRedeemed()) {
-                    int countt = Voucher.getVoucherCount() - 1;// minus one voucher count
+        // Using an iterator to safely remove elements
+        Iterator<Voucher> iterator = voucherList.iterator();
+        while(iterator.hasNext()){ //iterator is the current element
+            Voucher voucher = iterator.next();
+            if(voucher.getVoucherID().equals(vouchIDdel)){
+                iterator.remove(); //use iterator to remove the current element
+                System.out.println("Voucher with ID "+voucher.getVoucherID()+" deleted");
+                if(voucher.getIsRedeemed()){
+                    int countt = Voucher.getVoucherCount()-1;// minus one voucher count
                     voucher.setVoucherCount(countt);
                 }
+                return; //exit method after removing voucher ID
             }
         }
+        
         System.out.println("Voucher with ID " + vouchIDdel + " not found.");
     }
+
 
     // Syafiq(2220697): Method to modify voucher
     public static void modifyVoucher(ArrayList<Voucher> voucherList) {
