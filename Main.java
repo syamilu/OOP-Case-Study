@@ -156,6 +156,7 @@ public class Main {
                 } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());
                 }
+
             } while (true);
             // Using an iterator to safely remove elements
             Iterator<Voucher> iterator = voucherList.iterator();
@@ -173,6 +174,7 @@ public class Main {
                     System.out.println("Voucher with ID " + voucher.getVoucherID() + " deleted");
                     // Update the voucher count only if the voucher is deleted (not redeemed)
                     int countt = Voucher.getVoucherCount() - 1;
+
                     voucher.setVoucherCount(countt);
                     }
                 }
@@ -551,6 +553,7 @@ public class Main {
         // Input validation loop
         do {
             System.out.println("\nEnter the number of vouchers to generate: ");
+            System.out.println("Enter 0 to cancel.");
             System.out
                     .println("Maximum number of vouchers allowed: " + (Voucher.MAX_VOUCHER_COUNT - voucherList.size()));
             try {
@@ -558,11 +561,13 @@ public class Main {
                 if (num >= 'a' && num <= 'z' || num >= 'A' && num <= 'Z')// check if input is not integer
                 {
                     System.out.println("Invalid input. Please enter an integer.");
-                } else if (num < 1 || num > Voucher.MAX_VOUCHER_COUNT) // check if input is not between 1 and 30
+                } else if (num < 0 || num > Voucher.MAX_VOUCHER_COUNT) // check if input is not between 1 and 30
                 {
                     System.out.println(
                             "Invalid input. Please enter a number between 1 and " + Voucher.MAX_VOUCHER_COUNT + ".");
-                } else if ((voucherCount += num) > Voucher.MAX_VOUCHER_COUNT) // check if input is more than 30
+                } else if(num == 0){
+                    return;
+                }else if ((voucherCount += num) > Voucher.MAX_VOUCHER_COUNT) // check if input is more than 30
                 {
                     System.out.println("Unable to generate voucher. Maximum voucher count reached.");
                     voucherCount -= num; // reset voucher count
