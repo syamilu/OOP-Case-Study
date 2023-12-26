@@ -124,28 +124,27 @@ public class Main {
         } while (true);
         // Using an iterator to safely remove elements
         Iterator<Voucher> iterator = voucherList.iterator();
-        while(iterator.hasNext()){ //iterator is the current element
+        while (iterator.hasNext()) { // iterator is the current element
             Voucher voucher = iterator.next();
-            if(voucher.getVoucherID().equals(vouchIDdel)){
-                iterator.remove(); //use iterator to remove the current element
-                System.out.println("Voucher with ID "+voucher.getVoucherID()+" deleted");
-                if(voucher.getIsRedeemed()){
-                    int countt = Voucher.getVoucherCount()-1;// minus one voucher count
+            if (voucher.getVoucherID().equals(vouchIDdel)) {
+                iterator.remove(); // use iterator to remove the current element
+                System.out.println("Voucher with ID " + voucher.getVoucherID() + " deleted");
+                if (voucher.getIsRedeemed()) {
+                    int countt = Voucher.getVoucherCount() - 1;// minus one voucher count
                     voucher.setVoucherCount(countt);
                 }
-                return; //exit method after removing voucher ID
+                return; // exit method after removing voucher ID
             }
         }
-        
+
         System.out.println("Voucher with ID " + vouchIDdel + " not found.");
     }
-
 
     // Syafiq(2220697): Method to modify voucher
     public static void modifyVoucher(ArrayList<Voucher> voucherList) {
         Scanner input = new Scanner(System.in);
 
-        if (NewVoucherCount(voucherList) == 0) {
+        if (unredeemCount(voucherList) == 0) {
             System.out.println("No new voucher available!");
             return;
         }
@@ -156,7 +155,7 @@ public class Main {
         do {
             boolean found = false;
             Voucher v1 = null;
-            if (NewVoucherCount(voucherList) == 1) {
+            if (unredeemCount(voucherList) == 1) {
                 // Skipping input prompt if there's only one unredeemed voucher in the
                 // voucherList
                 for (Voucher v : voucherList) {
@@ -169,6 +168,7 @@ public class Main {
                 System.out.println("No. of available vouchers: 1");
             } else {
                 do {
+                    char choice = 'Y';
                     System.out.print("Enter the voucher ID to modify: ");
                     String voucherID = input.nextLine();
                     for (Voucher v : voucherList) {
@@ -181,6 +181,22 @@ public class Main {
                     }
                     if (!found) {
                         System.out.println("Voucher not found!\n");
+                        do {
+                            System.out.println("Do you want to modify another voucher? (Y/N)");
+                            try {
+                                choice = input.next().charAt(0);
+                                if (choice == 'N' || choice == 'n') {
+                                    return;
+                                } else if (!(choice == 'Y' || choice == 'y')) {
+                                    System.out.println("Invalid input. Please enter Y or N.\n");
+                                } else {
+                                    input.nextLine();
+                                }
+                            } catch (InputMismatchException e) {
+                                System.out.println("Invalid input. Please enter one character only.");
+                                input.next(); // consume the invalid input
+                            }
+                        } while (!(choice == 'Y' || choice == 'y'));
                     } else {
                         break;
                     }
@@ -281,13 +297,13 @@ public class Main {
                         System.out.println("Invalid choice!");
                 }
             } else if (v1.getIsRedeemed()) {
-                System.out.println("Voucher has already been redeemed!");
+                System.out.println("Voucher has already been redeemed! Cannot modify voucher details.");
                 return;
             }
 
             char continueChoice = 'Y';
             do {
-                if (NewVoucherCount(voucherList) > 1)
+                if (unredeemCount(voucherList) > 1)
                     System.out.println("\nDo you want to modify another voucher? (Y/N)");
                 else
                     System.out
@@ -448,6 +464,16 @@ public class Main {
             System.out.println();
         } while (true);
     }
+
+    public static int unredeemCount(ArrayList<Voucher> voucherList) {
+        int count = 0;
+        for (Voucher v : voucherList) {
+            if (v.getIsRedeemed() == false) {
+                count++;
+            }
+        }
+        return count;
+    } // end of Syafiq's method! :D
 
     // Firdaus
     // 2222041
