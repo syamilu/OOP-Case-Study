@@ -72,72 +72,129 @@ public class Main {
     // Saiful Ezlan(2221095) redeemVoucher and deleteVoucher
     public static void redeemVoucher(ArrayList<Voucher> voucherList) {
         Scanner scan = new Scanner(System.in);
-        // Input validation loop
-        String vouchIDclaim;
-        do {
-            try {
-                System.out.print("Enter the voucher ID to redeem: ");
-                vouchIDclaim = scan.nextLine();
-
-                if (vouchIDclaim.isEmpty()) {
-                    throw new IllegalArgumentException("Voucher ID cannot be empty.");
-                }
-
-                break; // Exit the loop if the input is valid
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+        String ans;
+        do{
+            if (voucherList.isEmpty()) {
+                System.out.println("No vouchers available for redemption.");
+                return;
             }
-        } while (true);
+            // Input validation loop
+            String vouchIDclaim;
+            do {
+                try {
+                    System.out.println("(Enter N to return to Main Menu)");
+                    System.out.print("Enter the voucher ID to redeem: ");
+                    vouchIDclaim = scan.nextLine();
 
-        for (Voucher voucher : voucherList) {
-            if (voucher.getVoucherID().equals(vouchIDclaim)) { // check if id is redeemed
-                if (!voucher.getIsRedeemed()) {
-                    voucher.setIsRedeemed();
-                    System.out.println("Voucher with ID " + voucher.getVoucherID() + " redeemed.");
-                } else {
-                    System.out.println("Voucher with ID " + voucher.getVoucherID() + " has already been redeemed.");
+                    if (vouchIDclaim.isEmpty()) {
+                        throw new IllegalArgumentException("Voucher ID cannot be empty.");
+                    }else if(vouchIDclaim.equalsIgnoreCase("N")){
+                        return;
+                    }
+
+                    break; // Exit the loop if the input is valid
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
                 }
-                return; // return if the id is in the array
+            } while (true);
+            boolean found=false;
+            for (Voucher voucher : voucherList) {
+                if (voucher.getVoucherID().equals(vouchIDclaim)) { // check if id is redeemed
+                    found=true;
+                    if (!voucher.getIsRedeemed()) {
+                        voucher.setIsRedeemed();
+                        System.out.println("Voucher with ID " + voucher.getVoucherID() + " redeemed.");
+                    } else {
+                        System.out.println("Voucher with ID " + voucher.getVoucherID() + " has already been redeemed.");
+                    }
+                    break;//exit loop if voucer is found
+                }
             }
-        }
-        System.out.println("Voucher with ID " + vouchIDclaim + " not found.");
+            if(!found){
+                System.out.println("Voucher with ID " + vouchIDclaim + " not found.");
+            }
+            do {
+                try {
+                    System.out.println("Do you want to redeem another voucher? (Y/N)");
+                    ans = scan.nextLine();
+                    if (!ans.equalsIgnoreCase("Y") && !ans.equalsIgnoreCase("N")) {
+                        throw new IllegalArgumentException("Invalid input. Please enter 'Y' or 'N'.");
+                    }
+                    break; // Exit the loop if the input is valid
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
+            } while (true);
+        }while (!ans.equalsIgnoreCase("N"));
     }
 
     // Saiful Ezlan(2221095) redeemVoucher and deleteVoucher
     public static void deleteVoucher(ArrayList<Voucher> voucherList) {
         Scanner scan = new Scanner(System.in);
-        // Input validation loop
-        String vouchIDdel;
-        do {
-            try {
-                System.out.print("Enter the voucher ID to delete: ");
-                vouchIDdel = scan.nextLine();
+        String ans;
+        do{
+            if (voucherList.isEmpty()) {
+                System.out.println("No vouchers available for deletion.");
+                return;
+            }
+            // Input validation loop
+            String vouchIDdel;
+            do {
+                try {
+                    System.out.println("(Enter N to return to Main Menu)");
+                    System.out.print("Enter the voucher ID to delete: ");
+                    
+                    vouchIDdel = scan.nextLine();
 
-                if (vouchIDdel.isEmpty()) {
-                    throw new IllegalArgumentException("Voucher ID cannot be empty.");
+                    if (vouchIDdel.isEmpty()) {
+                        throw new IllegalArgumentException("Voucher ID cannot be empty.");
+                    }else if(vouchIDdel.equalsIgnoreCase("N")){
+                        return;
+                    }
+
+                    break; // Exit the loop if the input is valid
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
                 }
 
-                break; // Exit the loop if the input is valid
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-        } while (true);
-        // Using an iterator to safely remove elements
-        Iterator<Voucher> iterator = voucherList.iterator();
-        while (iterator.hasNext()) { // iterator is the current element
-            Voucher voucher = iterator.next();
-            if (voucher.getVoucherID().equals(vouchIDdel)) {
-                iterator.remove(); // use iterator to remove the current element
-                System.out.println("Voucher with ID " + voucher.getVoucherID() + " deleted");
-                if (voucher.getIsRedeemed()) {
-                    int countt = Voucher.getVoucherCount() - 1;// minus one voucher count
+            } while (true);
+            // Using an iterator to safely remove elements
+            Iterator<Voucher> iterator = voucherList.iterator();
+            boolean found=false;
+            while (iterator.hasNext()) { // iterator is the current element
+                Voucher voucher = iterator.next();
+                if (voucher.getVoucherID().equals(vouchIDdel)) {
+                    found =true;
+                    if (voucher.getIsRedeemed()) {
+                    System.out.println("Cannot delete a redeemed voucher with ID " + voucher.getVoucherID());
+                    // Don't return here so that it continues to the next iteration of the outer loop
+                    // return;
+                } else {
+                    iterator.remove(); // use iterator to remove the current element
+                    System.out.println("Voucher with ID " + voucher.getVoucherID() + " deleted");
+                    // Update the voucher count only if the voucher is deleted (not redeemed)
+                    int countt = Voucher.getVoucherCount() - 1;
+
                     voucher.setVoucherCount(countt);
+                    }
                 }
-                return; // exit method after removing voucher ID
             }
-        }
-
-        System.out.println("Voucher with ID " + vouchIDdel + " not found.");
+            if(!found){
+                System.out.println("Voucher with ID " + vouchIDdel + " not found.");
+            }
+            do {
+                try {
+                    System.out.println("Do you want to delete another voucher? (Y/N)");
+                    ans = scan.nextLine();
+                    if (!ans.equalsIgnoreCase("Y") && !ans.equalsIgnoreCase("N")) {
+                        throw new IllegalArgumentException("Invalid input. Please enter 'Y' or 'N'.");
+                    }
+                    break; // Exit the loop if the input is valid
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
+            } while (true);
+        }while (!ans.equalsIgnoreCase("N"));
     }
 
     // Syafiq(2220697): Method to modify voucher
